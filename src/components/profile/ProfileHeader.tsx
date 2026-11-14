@@ -3,7 +3,6 @@
 import React from 'react';
 import Image from 'next/image';
 import { ProfileData } from '../../types/profile';
-import { themeConfigs } from '../../utils/theme';
 import {
   BuildingIcon,
   CheckIcon,
@@ -27,14 +26,34 @@ interface ProfileHeaderProps {
   onShare: () => void;
 }
 
+/**
+ * [Neobrutalism 스타일 가이드 적용 프로필 카드]
+ * - 굵은 검은 테두리: 3px solid black
+ * - 하드 그림자: 6px 6px 0 black (블러 없음)
+ * - 배경색: 밝은 노란색 (#FEF08A)
+ * - 둥근 모서리: 12px
+ *
+ * [프로필 카드]
+ * - 위 스타일 적용
+ * - 패딩: 24px, 중앙 정렬
+ *
+ * [프로필 이미지]
+ * - 형태: 원형 (border-radius: 50%)
+ * - 크기: 120px x 120px
+ * - 테두리: 3px solid black
+ * - 하드 그림자: 4px 4px 0 black
+ *
+ * [반응형]
+ * - 모바일 (360px~767px): 카드 너비 100%, 패딩 16px
+ * - 태블릿 (768px~1023px): 카드 너비 80%, 최대 480px
+ * - 데스크탑 (1024px~): 카드 너비 400px 고정
+ */
 export function ProfileHeader({
   profile,
   onOpenEdit,
   onOpenQr,
   onShare,
 }: ProfileHeaderProps) {
-  const currentTheme = themeConfigs[profile.theme] || themeConfigs.violet;
-
   const renderSocialIcon = (platform: string) => {
     switch (platform) {
       case 'github':
@@ -54,33 +73,47 @@ export function ProfileHeader({
   };
 
   return (
-    <div className="relative w-full rounded-3xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 shadow-xl overflow-hidden transition-all duration-300">
-      {/* Decorative Gradient Banner */}
-      <div
-        className={`h-36 sm:h-44 w-full bg-gradient-to-r ${currentTheme.gradientHeader} relative overflow-hidden`}
-      >
-        <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]" />
-        
-        {/* Floating Top-Right Action Controls */}
-        <div className="absolute top-4 right-4 flex items-center gap-2 z-10">
+    <section
+      aria-label="프로필 섹션"
+      className="neobrutal-profile-card w-full p-[16px] md:w-[80%] md:max-w-[480px] md:p-[24px] lg:w-[400px] lg:max-w-[400px] lg:p-[24px] mx-auto text-center flex flex-col items-center bg-[#FEF08A] rounded-[12px] border-[3px] border-black shadow-[6px_6px_0px_#000] text-black relative transition-all duration-200"
+      style={{
+        backgroundColor: '#FEF08A',
+        border: '3px solid black',
+        boxShadow: '6px 6px 0 black',
+        borderRadius: '12px',
+      }}
+    >
+      {/* 상단 컨트롤 바 (협업 뱃지 & 액션 버튼) */}
+      <div className="w-full flex items-center justify-between mb-3 gap-2">
+        {profile.isAvailableForHire ? (
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[8px] bg-[#86EFAC] text-black border-[2px] border-black shadow-[2px_2px_0px_#000] text-[11px] font-black">
+            <span className="w-2 h-2 rounded-full bg-emerald-600 animate-pulse" />
+            <span>협업 가능</span>
+          </div>
+        ) : (
+          <div />
+        )}
+
+        {/* Action Buttons: 공유, QR, 편집 */}
+        <div className="flex items-center gap-1.5 ml-auto">
           <button
             onClick={onShare}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/30 hover:bg-black/50 text-white backdrop-blur-md text-xs font-medium transition shadow-xs active:scale-95"
+            className="flex items-center gap-1 px-2.5 py-1 rounded-[8px] bg-white hover:bg-zinc-100 text-black border-[2px] border-black shadow-[2px_2px_0px_#000] text-xs font-bold transition active:translate-x-[1px] active:translate-y-[1px] active:shadow-none cursor-pointer"
             title="공유하기"
           >
-            <ShareIcon size={14} />
+            <ShareIcon size={13} />
             <span className="hidden sm:inline">공유</span>
           </button>
           <button
             onClick={onOpenQr}
-            className="p-1.5 rounded-full bg-black/30 hover:bg-black/50 text-white backdrop-blur-md transition shadow-xs active:scale-95"
+            className="p-1.5 rounded-[8px] bg-white hover:bg-zinc-100 text-black border-[2px] border-black shadow-[2px_2px_0px_#000] transition active:translate-x-[1px] active:translate-y-[1px] active:shadow-none cursor-pointer"
             title="QR 코드 보기"
           >
-            <QrCodeIcon size={15} />
+            <QrCodeIcon size={14} />
           </button>
           <button
             onClick={onOpenEdit}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/90 hover:bg-white text-zinc-900 backdrop-blur-md text-xs font-semibold transition shadow-sm active:scale-95"
+            className="flex items-center gap-1 px-2.5 py-1 rounded-[8px] bg-white hover:bg-zinc-100 text-black border-[2px] border-black shadow-[2px_2px_0px_#000] text-xs font-black transition active:translate-x-[1px] active:translate-y-[1px] active:shadow-none cursor-pointer"
             title="프로필 편집"
           >
             <EditIcon size={13} />
@@ -89,125 +122,122 @@ export function ProfileHeader({
         </div>
       </div>
 
-      {/* Main Profile Info Section */}
-      <div className="px-5 sm:px-8 pb-6 sm:pb-8 pt-0 relative">
-        {/* Avatar & Badges Container */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between -mt-16 sm:-mt-20 mb-4 gap-4">
-          <div className="relative inline-block self-center sm:self-start">
-            <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-3xl p-1 bg-white dark:bg-zinc-900 shadow-2xl relative">
-              <div className="w-full h-full rounded-[22px] overflow-hidden relative bg-zinc-200 dark:bg-zinc-800">
-                <Image
-                  src={profile.avatarUrl}
-                  alt={profile.name}
-                  fill
-                  sizes="(max-width: 640px) 112px, 128px"
-                  className="object-cover"
-                  priority
-                />
-              </div>
-            </div>
-            {/* Status indicator */}
-            <span
-              className="absolute bottom-2 right-2 w-5 h-5 rounded-full bg-emerald-500 border-3 border-white dark:border-zinc-900 flex items-center justify-center shadow-sm"
-              title="활동 중"
-            >
-              <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
-            </span>
-          </div>
-
-          {/* Availability Status Badge */}
-          {profile.isAvailableForHire && (
-            <div className="flex items-center justify-center sm:justify-start gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200/60 dark:border-emerald-800/60 text-xs font-semibold self-center sm:self-end">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
-              <span>커피챗 & 프로젝트 협업 가능</span>
-            </div>
-          )}
+      {/* [프로필 이미지 섹션]
+          - 형태: 원형 (border-radius: 50%)
+          - 크기: 120px x 120px
+          - 테두리: 3px solid black
+          - 하드 그림자: 4px 4px 0 black */}
+      <div className="relative mb-3.5">
+        <div
+          className="neobrutal-profile-img-container w-[120px] h-[120px] min-w-[120px] min-h-[120px] max-w-[120px] max-h-[120px] rounded-full border-[3px] border-black shadow-[4px_4px_0px_#000] overflow-hidden relative bg-white mx-auto"
+          style={{
+            width: '120px',
+            height: '120px',
+            borderRadius: '50%',
+            border: '3px solid black',
+            boxShadow: '4px 4px 0 black',
+          }}
+        >
+          <Image
+            src={profile.avatarUrl}
+            alt={profile.name}
+            fill
+            sizes="120px"
+            className="object-cover rounded-full"
+            priority
+          />
         </div>
+        {/* Status indicator */}
+        <span
+          className="absolute bottom-1 right-1 w-5 h-5 rounded-full bg-emerald-400 border-[2px] border-black flex items-center justify-center shadow-[1px_1px_0px_#000]"
+          title="활동 중"
+        >
+          <span className="w-2 h-2 rounded-full bg-black animate-pulse" />
+        </span>
+      </div>
 
-        {/* Name, Handle & Headline */}
-        <div className="text-center sm:text-left space-y-1.5">
-          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">
-            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-zinc-900 dark:text-white">
-              {profile.name}
-            </h1>
-            <span className="text-sm font-medium text-zinc-400 dark:text-zinc-500">
-              ({profile.englishName})
-            </span>
-            <span
-              className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-blue-500 text-white shadow-xs"
-              title="인증된 프로필"
-            >
-              <CheckIcon size={12} />
-            </span>
-          </div>
+      {/* 이름 & 영문명 & 인증 뱃지 */}
+      <div className="flex flex-wrap items-center justify-center gap-1.5 mb-1">
+        <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-black">
+          {profile.name}
+        </h1>
+        <span className="text-sm font-bold text-black/75">
+          ({profile.englishName})
+        </span>
+        <span
+          className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-blue-500 text-white border-[1.5px] border-black shadow-[1px_1px_0px_#000]"
+          title="인증된 프로필"
+        >
+          <CheckIcon size={12} />
+        </span>
+      </div>
 
-          <div className="flex items-center justify-center sm:justify-start gap-2 text-sm font-medium text-zinc-500 dark:text-zinc-400">
-            <span className="text-violet-600 dark:text-violet-400 font-semibold font-mono">
-              @{profile.handle}
-            </span>
-            <span>•</span>
-            <span>{profile.headline}</span>
-          </div>
+      {/* 핸들 & 헤드라인 */}
+      <div className="flex flex-wrap items-center justify-center gap-1.5 text-xs sm:text-sm font-bold text-black/90 mb-2.5">
+        <span className="bg-black text-white px-2 py-0.5 rounded-[6px] font-mono text-xs font-extrabold shadow-[1px_1px_0px_#000]">
+          @{profile.handle}
+        </span>
+        <span className="text-black font-black">•</span>
+        <span className="text-black font-extrabold">{profile.headline}</span>
+      </div>
 
-          {/* Location & Organization */}
-          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-y-1 gap-x-4 pt-1 text-xs text-zinc-600 dark:text-zinc-400">
-            <div className="flex items-center gap-1.5">
-              <BuildingIcon size={14} className="text-zinc-400" />
-              <span>
-                {profile.organization} {profile.department}
-              </span>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <MapPinIcon size={14} className="text-zinc-400" />
-              <span>{profile.location}</span>
-            </div>
-          </div>
-
-          {/* Status Message */}
-          {profile.statusMessage && (
-            <div className="pt-2">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-zinc-100 dark:bg-zinc-800/70 border border-zinc-200/70 dark:border-zinc-700/60 text-xs font-medium text-zinc-700 dark:text-zinc-300">
-                <SparklesIcon size={13} className="text-amber-500" />
-                <span>{profile.statusMessage}</span>
-              </div>
-            </div>
-          )}
-
-          {/* Bio paragraph */}
-          <p className="pt-2 text-sm leading-relaxed text-zinc-600 dark:text-zinc-300 max-w-2xl">
-            {profile.bio}
-          </p>
-
-          {/* Tech Skills Pills */}
-          <div className="pt-3 flex flex-wrap items-center justify-center sm:justify-start gap-1.5">
-            {profile.skills.map((skill) => (
-              <span
-                key={skill}
-                className="px-2.5 py-1 rounded-lg text-xs font-medium bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 border border-zinc-200/50 dark:border-zinc-700/50"
-              >
-                {skill}
-              </span>
-            ))}
-          </div>
-
-          {/* Social Links Bar */}
-          <div className="pt-4 flex flex-wrap items-center justify-center sm:justify-start gap-2">
-            {profile.socialLinks.map((social) => (
-              <a
-                key={social.platform}
-                href={social.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2.5 rounded-xl bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-700 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white transition duration-150 shadow-xs hover:scale-105 active:scale-95"
-                title={social.label}
-                aria-label={social.label}
-              >
-                {renderSocialIcon(social.platform)}
-              </a>
-            ))}
-          </div>
+      {/* 소속 & 위치 */}
+      <div className="flex flex-wrap items-center justify-center gap-2 mb-2.5 text-xs font-bold text-black">
+        <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-[8px] bg-white border-[2px] border-black shadow-[2px_2px_0px_#000]">
+          <BuildingIcon size={13} className="text-black" />
+          <span>
+            {profile.organization} {profile.department}
+          </span>
+        </div>
+        <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-[8px] bg-white border-[2px] border-black shadow-[2px_2px_0px_#000]">
+          <MapPinIcon size={13} className="text-black" />
+          <span>{profile.location}</span>
         </div>
       </div>
-    </div>
+
+      {/* 상태 메시지 */}
+      {profile.statusMessage && (
+        <div className="mb-2.5">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-[8px] bg-white border-[2px] border-black text-xs font-black text-black shadow-[2px_2px_0px_#000]">
+            <SparklesIcon size={13} className="text-amber-500" />
+            <span>{profile.statusMessage}</span>
+          </div>
+        </div>
+      )}
+
+      {/* 소개글 (Bio) */}
+      <p className="text-xs sm:text-sm font-semibold leading-relaxed text-black/90 max-w-sm mb-3">
+        {profile.bio}
+      </p>
+
+      {/* 기술 스택 뱃지 */}
+      <div className="flex flex-wrap items-center justify-center gap-1.5 mb-3.5">
+        {profile.skills.map((skill) => (
+          <span
+            key={skill}
+            className="px-2.5 py-0.5 rounded-[8px] text-[11px] font-extrabold bg-white text-black border-[2px] border-black shadow-[2px_2px_0px_#000] hover:bg-yellow-100 transition-colors"
+          >
+            {skill}
+          </span>
+        ))}
+      </div>
+
+      {/* 소셜 링크 아이콘 바 */}
+      <div className="flex flex-wrap items-center justify-center gap-2 pt-0.5">
+        {profile.socialLinks.map((social) => (
+          <a
+            key={social.platform}
+            href={social.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="p-2 rounded-[8px] bg-white hover:bg-yellow-200 text-black border-[2px] border-black shadow-[2px_2px_0px_#000] transition active:translate-x-[1px] active:translate-y-[1px] active:shadow-none hover:scale-105"
+            title={social.label}
+            aria-label={social.label}
+          >
+            {renderSocialIcon(social.platform)}
+          </a>
+        ))}
+      </div>
+    </section>
   );
 }

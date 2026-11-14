@@ -154,7 +154,7 @@ export function ProfileContainer({ initialData = initialProfileData }: ProfileCo
             : 'max-w-2xl'
         }`}
       >
-        <div className="w-full space-y-6">
+        <div className="w-full flex flex-col items-center space-y-6">
           {/* Profile Header */}
           <ProfileHeader
             profile={profile}
@@ -163,87 +163,89 @@ export function ProfileContainer({ initialData = initialProfileData }: ProfileCo
             onShare={handleCopyLink}
           />
 
-          {/* Navigation Tabs */}
-          <nav className="flex items-center p-1 rounded-2xl bg-zinc-200/70 dark:bg-zinc-900/80 border border-zinc-200 dark:border-zinc-800/80 backdrop-blur-md">
-            <button
-              onClick={() => setActiveTab('links')}
-              className={`flex-1 py-2.5 px-2 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-1.5 transition-all ${
-                activeTab === 'links'
-                  ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-sm'
-                  : 'text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200'
-              }`}
-            >
-              <GlobeIcon size={15} />
-              <span>링크</span>
-              <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-zinc-100 dark:bg-zinc-700 text-zinc-600 dark:text-zinc-300 font-normal">
-                {profile.links.length}
-              </span>
-            </button>
+          {/* Navigation Tabs & Content Container */}
+          <div className="w-full md:w-[80%] md:max-w-[480px] lg:w-[400px] lg:max-w-[400px] mx-auto space-y-6">
+            <nav className="flex items-center p-1 rounded-2xl bg-zinc-200/70 dark:bg-zinc-900/80 border border-zinc-200 dark:border-zinc-800/80 backdrop-blur-md">
+              <button
+                onClick={() => setActiveTab('links')}
+                className={`flex-1 py-2.5 px-2 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-1.5 transition-all ${
+                  activeTab === 'links'
+                    ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-sm'
+                    : 'text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200'
+                }`}
+              >
+                <GlobeIcon size={15} />
+                <span>링크</span>
+                <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-zinc-100 dark:bg-zinc-700 text-zinc-600 dark:text-zinc-300 font-normal">
+                  {profile.links.length}
+                </span>
+              </button>
 
-            <button
-              onClick={() => setActiveTab('projects')}
-              className={`flex-1 py-2.5 px-2 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-1.5 transition-all ${
-                activeTab === 'projects'
-                  ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-sm'
-                  : 'text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200'
-              }`}
-            >
-              <BriefcaseIcon size={15} />
-              <span>프로젝트</span>
-              <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-zinc-100 dark:bg-zinc-700 text-zinc-600 dark:text-zinc-300 font-normal">
-                {profile.projects.length}
-              </span>
-            </button>
+              <button
+                onClick={() => setActiveTab('projects')}
+                className={`flex-1 py-2.5 px-2 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-1.5 transition-all ${
+                  activeTab === 'projects'
+                    ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-sm'
+                    : 'text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200'
+                }`}
+              >
+                <BriefcaseIcon size={15} />
+                <span>프로젝트</span>
+                <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-zinc-100 dark:bg-zinc-700 text-zinc-600 dark:text-zinc-300 font-normal">
+                  {profile.projects.length}
+                </span>
+              </button>
 
-            <button
-              onClick={() => setActiveTab('about')}
-              className={`flex-1 py-2.5 px-2 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-1.5 transition-all ${
-                activeTab === 'about'
-                  ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-sm'
-                  : 'text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200'
-              }`}
-            >
-              <GraduationCapIcon size={15} />
-              <span>소개/이력</span>
-            </button>
+              <button
+                onClick={() => setActiveTab('about')}
+                className={`flex-1 py-2.5 px-2 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-1.5 transition-all ${
+                  activeTab === 'about'
+                    ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-sm'
+                    : 'text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200'
+                }`}
+              >
+                <GraduationCapIcon size={15} />
+                <span>소개/이력</span>
+              </button>
 
-            <button
-              onClick={() => setActiveTab('guestbook')}
-              className={`flex-1 py-2.5 px-2 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-1.5 transition-all ${
-                activeTab === 'guestbook'
-                  ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-sm'
-                  : 'text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200'
-              }`}
-            >
-              <MessageSquareIcon size={15} />
-              <span>방명록</span>
-            </button>
-          </nav>
+              <button
+                onClick={() => setActiveTab('guestbook')}
+                className={`flex-1 py-2.5 px-2 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-1.5 transition-all ${
+                  activeTab === 'guestbook'
+                    ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-sm'
+                    : 'text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200'
+                }`}
+              >
+                <MessageSquareIcon size={15} />
+                <span>방명록</span>
+              </button>
+            </nav>
 
-          {/* Tab Content Display */}
-          <div className="pt-1">
-            {activeTab === 'links' && (
-              <LinksTab
-                links={profile.links}
-                theme={profile.theme}
-                onLinkClick={handleLinkClick}
-              />
-            )}
-            {activeTab === 'projects' && (
-              <ProjectsTab
-                projects={profile.projects}
-                theme={profile.theme}
-              />
-            )}
-            {activeTab === 'about' && (
-              <AboutTab profile={profile} />
-            )}
-            {activeTab === 'guestbook' && (
-              <GuestbookTab
-                theme={profile.theme}
-                onToast={showToast}
-              />
-            )}
+            {/* Tab Content Display */}
+            <div className="pt-1">
+              {activeTab === 'links' && (
+                <LinksTab
+                  links={profile.links}
+                  theme={profile.theme}
+                  onLinkClick={handleLinkClick}
+                />
+              )}
+              {activeTab === 'projects' && (
+                <ProjectsTab
+                  projects={profile.projects}
+                  theme={profile.theme}
+                />
+              )}
+              {activeTab === 'about' && (
+                <AboutTab profile={profile} />
+              )}
+              {activeTab === 'guestbook' && (
+                <GuestbookTab
+                  theme={profile.theme}
+                  onToast={showToast}
+                />
+              )}
+            </div>
           </div>
 
           {/* Footer Branding */}
