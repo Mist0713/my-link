@@ -1,6 +1,5 @@
 import { Metadata } from 'next';
 import { ProfileContainer } from '../components/profile/ProfileContainer';
-import { ProfileHeader } from '../components/profile/ProfileHeader';
 
 export const metadata: Metadata = {
   title: '이지원 | My-Link (Toss Design System)',
@@ -14,8 +13,6 @@ export const metadata: Metadata = {
  * - 보이스 & 톤: 유능하고 친절한 해요체 ("~해요", "~있어요")
  * - 컴포넌트: ListRow, 24px 라운드 카드, 44px 아이콘 슬롯, TDS 버튼 위계
  */
-
-export { ProfileHeader };
 
 export default function Home() {
   return <ProfileContainer />;
