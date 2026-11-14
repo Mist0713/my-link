@@ -67,7 +67,7 @@ export function ProfileContainer({ initialData = initialProfileData }: ProfileCo
     } catch {
       // ignore
     }
-    showToast('프로필 정보가 저장되었습니다! 💾');
+    showToast('프로필 정보가 저장되었어요 💾');
   };
 
   const handleResetProfile = () => {
@@ -78,13 +78,13 @@ export function ProfileContainer({ initialData = initialProfileData }: ProfileCo
       // ignore
     }
     setIsEditOpen(false);
-    showToast('기본 프로필로 초기화되었습니다 🔄');
+    showToast('기본 프로필로 초기화되었어요 🔄');
   };
 
   const handleCopyLink = async () => {
     try {
       await navigator.clipboard.writeText(currentUrl);
-      showToast('프로필 링크가 클립보드에 복사되었습니다! 📋');
+      showToast('프로필 링크가 복사되었어요 📋');
     } catch {
       showToast('링크 주소: ' + currentUrl);
     }
@@ -106,39 +106,39 @@ export function ProfileContainer({ initialData = initialProfileData }: ProfileCo
   };
 
   return (
-    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 flex flex-col items-center py-6 sm:py-10 px-4 sm:px-6 transition-colors duration-300">
-      {/* Top Bar for View Controls & Branding */}
-      <header className="w-full max-w-2xl flex items-center justify-between mb-6 px-1">
+    <div className="min-h-screen bg-[#F2F4F6] text-[#191F28] flex flex-col items-center py-6 sm:py-10 px-4 sm:px-6 transition-colors duration-300">
+      {/* TDS Top Navigation Bar */}
+      <header className="w-full max-w-md flex items-center justify-between mb-5 px-1">
         <div className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-lg bg-gradient-to-tr from-violet-600 to-indigo-600 flex items-center justify-center text-white font-extrabold text-xs shadow-xs">
+          <div className="w-7 h-7 rounded-[10px] bg-[#3182F6] flex items-center justify-center text-white font-extrabold text-xs shadow-xs">
             ML
           </div>
-          <span className="font-extrabold tracking-tight text-sm text-zinc-900 dark:text-white">
+          <span className="font-extrabold tracking-tight text-sm text-[#191F28]">
             My-Link
           </span>
-          <span className="text-[10px] px-1.5 py-0.5 rounded-md bg-zinc-200 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 font-mono">
+          <span className="text-[10px] px-1.5 py-0.5 rounded-[6px] bg-[#E5E8EB] text-[#4E5968] font-mono">
             HYU
           </span>
         </div>
 
-        {/* View Mode Switcher (Desktop card vs Mobile frame) */}
-        <div className="flex items-center gap-1 p-1 rounded-xl bg-zinc-200/70 dark:bg-zinc-900 border border-zinc-300/60 dark:border-zinc-800 text-xs">
+        {/* View Mode Switcher (TDS Segmented-Control) */}
+        <div className="flex items-center gap-1 p-1 rounded-[12px] bg-[#E5E8EB] text-xs">
           <button
             onClick={() => setViewMode('responsive')}
-            className={`px-3 py-1 rounded-lg font-medium transition ${
+            className={`px-3 py-1 rounded-[8px] font-semibold transition ${
               viewMode === 'responsive'
-                ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-xs'
-                : 'text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200'
+                ? 'bg-white text-[#191F28] shadow-[0_1px_2px_rgba(25,31,40,0.06)]'
+                : 'text-[#6B7684] hover:text-[#191F28]'
             }`}
           >
             기본 뷰
           </button>
           <button
             onClick={() => setViewMode('mobile')}
-            className={`px-3 py-1 rounded-lg font-medium transition ${
+            className={`px-3 py-1 rounded-[8px] font-semibold transition ${
               viewMode === 'mobile'
-                ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-xs'
-                : 'text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200'
+                ? 'bg-white text-[#191F28] shadow-[0_1px_2px_rgba(25,31,40,0.06)]'
+                : 'text-[#6B7684] hover:text-[#191F28]'
             }`}
           >
             📱 모바일 프레임
@@ -146,16 +146,16 @@ export function ProfileContainer({ initialData = initialProfileData }: ProfileCo
         </div>
       </header>
 
-      {/* Main Container Wrapper */}
+      {/* Main Container Wrapper (TDS Mobile-First Single Column) */}
       <main
         className={`w-full transition-all duration-300 ${
           viewMode === 'mobile'
-            ? 'max-w-md border-8 border-zinc-800 rounded-[44px] shadow-2xl p-2 bg-zinc-900 overflow-hidden my-4 ring-1 ring-zinc-700/50'
-            : 'max-w-2xl'
+            ? 'max-w-md border-[6px] border-[#333D4B] rounded-[44px] shadow-2xl p-2 bg-[#F2F4F6] overflow-hidden my-4 ring-1 ring-black/10'
+            : 'max-w-md'
         }`}
       >
-        <div className="w-full flex flex-col items-center space-y-6">
-          {/* Profile Header */}
+        <div className="w-full space-y-4">
+          {/* Profile Header (TDS Card) */}
           <ProfileHeader
             profile={profile}
             onOpenEdit={() => setIsEditOpen(true)}
@@ -163,101 +163,100 @@ export function ProfileContainer({ initialData = initialProfileData }: ProfileCo
             onShare={handleCopyLink}
           />
 
-          {/* Navigation Tabs & Content Container */}
-          <div className="w-full md:w-[80%] md:max-w-[480px] lg:w-[400px] lg:max-w-[400px] mx-auto space-y-6">
-            <nav className="flex items-center p-1 rounded-2xl bg-zinc-200/70 dark:bg-zinc-900/80 border border-zinc-200 dark:border-zinc-800/80 backdrop-blur-md">
-              <button
-                onClick={() => setActiveTab('links')}
-                className={`flex-1 py-2.5 px-2 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-1.5 transition-all ${
-                  activeTab === 'links'
-                    ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-sm'
-                    : 'text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200'
-                }`}
-              >
-                <GlobeIcon size={15} />
-                <span>링크</span>
-                <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-zinc-100 dark:bg-zinc-700 text-zinc-600 dark:text-zinc-300 font-normal">
-                  {profile.links.length}
-                </span>
-              </button>
+          {/* Floating Navigation Tabs (TDS Floating Tab-Bar) */}
+          <nav className="flex items-center p-1.5 rounded-[20px] bg-white border border-[#E5E8EB] shadow-[0_2px_8px_rgba(25,31,40,0.04)]">
+            <button
+              onClick={() => setActiveTab('links')}
+              className={`flex-1 py-2.5 px-2 rounded-[14px] text-xs sm:text-sm font-bold flex items-center justify-center gap-1.5 transition-all ${
+                activeTab === 'links'
+                  ? 'bg-[#E8F3FF] text-[#3182F6]'
+                  : 'text-[#6B7684] hover:text-[#191F28]'
+              }`}
+            >
+              <GlobeIcon size={15} />
+              <span>링크</span>
+              <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-semibold ${
+                activeTab === 'links' ? 'bg-[#3182F6]/10 text-[#3182F6]' : 'bg-[#F2F4F6] text-[#8B95A1]'
+              }`}>
+                {profile.links.length}
+              </span>
+            </button>
 
-              <button
-                onClick={() => setActiveTab('projects')}
-                className={`flex-1 py-2.5 px-2 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-1.5 transition-all ${
-                  activeTab === 'projects'
-                    ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-sm'
-                    : 'text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200'
-                }`}
-              >
-                <BriefcaseIcon size={15} />
-                <span>프로젝트</span>
-                <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-zinc-100 dark:bg-zinc-700 text-zinc-600 dark:text-zinc-300 font-normal">
-                  {profile.projects.length}
-                </span>
-              </button>
+            <button
+              onClick={() => setActiveTab('projects')}
+              className={`flex-1 py-2.5 px-2 rounded-[14px] text-xs sm:text-sm font-bold flex items-center justify-center gap-1.5 transition-all ${
+                activeTab === 'projects'
+                  ? 'bg-[#E8F3FF] text-[#3182F6]'
+                  : 'text-[#6B7684] hover:text-[#191F28]'
+              }`}
+            >
+              <BriefcaseIcon size={15} />
+              <span>프로젝트</span>
+              <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-semibold ${
+                activeTab === 'projects' ? 'bg-[#3182F6]/10 text-[#3182F6]' : 'bg-[#F2F4F6] text-[#8B95A1]'
+              }`}>
+                {profile.projects.length}
+              </span>
+            </button>
 
-              <button
-                onClick={() => setActiveTab('about')}
-                className={`flex-1 py-2.5 px-2 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-1.5 transition-all ${
-                  activeTab === 'about'
-                    ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-sm'
-                    : 'text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200'
-                }`}
-              >
-                <GraduationCapIcon size={15} />
-                <span>소개/이력</span>
-              </button>
+            <button
+              onClick={() => setActiveTab('about')}
+              className={`flex-1 py-2.5 px-2 rounded-[14px] text-xs sm:text-sm font-bold flex items-center justify-center gap-1.5 transition-all ${
+                activeTab === 'about'
+                  ? 'bg-[#E8F3FF] text-[#3182F6]'
+                  : 'text-[#6B7684] hover:text-[#191F28]'
+              }`}
+            >
+              <GraduationCapIcon size={15} />
+              <span>소개/이력</span>
+            </button>
 
-              <button
-                onClick={() => setActiveTab('guestbook')}
-                className={`flex-1 py-2.5 px-2 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-1.5 transition-all ${
-                  activeTab === 'guestbook'
-                    ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-sm'
-                    : 'text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200'
-                }`}
-              >
-                <MessageSquareIcon size={15} />
-                <span>방명록</span>
-              </button>
-            </nav>
+            <button
+              onClick={() => setActiveTab('guestbook')}
+              className={`flex-1 py-2.5 px-2 rounded-[14px] text-xs sm:text-sm font-bold flex items-center justify-center gap-1.5 transition-all ${
+                activeTab === 'guestbook'
+                  ? 'bg-[#E8F3FF] text-[#3182F6]'
+                  : 'text-[#6B7684] hover:text-[#191F28]'
+              }`}
+            >
+              <MessageSquareIcon size={15} />
+              <span>방명록</span>
+            </button>
+          </nav>
 
-            {/* Tab Content Display */}
-            <div className="pt-1">
-              {activeTab === 'links' && (
-                <LinksTab
-                  links={profile.links}
-                  theme={profile.theme}
-                  onLinkClick={handleLinkClick}
-                />
-              )}
-              {activeTab === 'projects' && (
-                <ProjectsTab
-                  projects={profile.projects}
-                  theme={profile.theme}
-                />
-              )}
-              {activeTab === 'about' && (
-                <AboutTab profile={profile} />
-              )}
-              {activeTab === 'guestbook' && (
-                <GuestbookTab
-                  theme={profile.theme}
-                  onToast={showToast}
-                />
-              )}
-            </div>
+          {/* Tab Content Display */}
+          <div className="pt-1">
+            {activeTab === 'links' && (
+              <LinksTab
+                links={profile.links}
+                theme={profile.theme}
+                onLinkClick={handleLinkClick}
+              />
+            )}
+            {activeTab === 'projects' && (
+              <ProjectsTab
+                projects={profile.projects}
+                theme={profile.theme}
+              />
+            )}
+            {activeTab === 'about' && (
+              <AboutTab profile={profile} />
+            )}
+            {activeTab === 'guestbook' && (
+              <GuestbookTab
+                theme={profile.theme}
+                onToast={showToast}
+              />
+            )}
           </div>
 
-          {/* Footer Branding */}
-          <footer className="pt-8 pb-4 text-center text-xs text-zinc-400 space-y-1">
-            <p className="font-medium">
-              Made with <span className="text-rose-500">♥</span> on{' '}
-              <span className="font-bold text-zinc-600 dark:text-zinc-300">
-                My-Link
-              </span>
+          {/* Footer Branding (TDS 해요체) */}
+          <footer className="pt-8 pb-4 text-center text-xs text-[#8B95A1] space-y-1">
+            <p className="font-medium text-[#6B7684]">
+              토스 디자인 시스템(TDS) 스타일로 구성되었어요
             </p>
-            <p className="text-[11px] text-zinc-400">
-              한양대학교 학생 및 크리에이터를 위한 스마트 바이오링크
+            <p className="text-[11px] text-[#8B95A1]">
+              한양대학교 학생 및 크리에이터를 위한 스마트 바이오링크예요
             </p>
           </footer>
         </div>

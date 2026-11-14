@@ -13,6 +13,17 @@ export interface ThemeConfig {
 }
 
 export const themeConfigs: Record<ProfileTheme, ThemeConfig> = {
+  toss: {
+    name: '토스 블루 (Toss Blue)',
+    gradientHeader: 'from-[#3182F6] to-[#1B64DA]',
+    badgeBg: 'bg-[#E8F3FF] text-[#3182F6]',
+    accentText: 'text-[#3182F6]',
+    accentBg: 'bg-[#3182F6] hover:bg-[#1B64DA] text-white',
+    accentBorder: 'border-[#E5E8EB]',
+    buttonGradient: 'from-[#3182F6] to-[#3182F6] hover:bg-[#1B64DA]',
+    cardHover: 'hover:border-[#3182F6] hover:shadow-[0_4px_16px_rgba(49,130,246,0.08)]',
+    glowColor: 'rgba(49, 130, 246, 0.15)',
+  },
   violet: {
     name: '바이올렛 (Violet)',
     gradientHeader: 'from-violet-600 via-purple-600 to-indigo-700',

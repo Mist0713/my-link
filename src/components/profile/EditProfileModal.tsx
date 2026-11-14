@@ -104,31 +104,31 @@ export function EditProfileModal({
         onClick={(e) => e.stopPropagation()}
       >
         {/* Modal Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-zinc-200 dark:border-zinc-800">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-[#E5E8EB]">
           <div>
-            <h2 className="text-lg font-bold text-zinc-900 dark:text-white">
+            <h2 className="text-lg font-bold text-[#191F28]">
               프로필 편집
             </h2>
-            <p className="text-xs text-zinc-500">
-              내 프로필 정보와 링크를 자유롭게 수정하세요
+            <p className="text-xs text-[#8B95A1]">
+              내 프로필 정보와 링크를 자유롭게 수정해 보세요
             </p>
           </div>
           <button
             onClick={onClose}
-            className="p-2 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-800 transition"
+            className="p-2 text-[#8B95A1] hover:text-[#191F28] rounded-full hover:bg-[#F2F4F6] transition"
           >
             <CloseIcon size={18} />
           </button>
         </div>
 
         {/* Tab Selection */}
-        <div className="flex border-b border-zinc-200 dark:border-zinc-800 px-6 gap-4 bg-zinc-50 dark:bg-zinc-900/50">
+        <div className="flex border-b border-[#E5E8EB] px-6 gap-4 bg-[#F9FAFB]">
           <button
             onClick={() => setActiveTab('basic')}
             className={`py-3 text-xs sm:text-sm font-semibold border-b-2 transition-colors ${
               activeTab === 'basic'
-                ? 'border-violet-600 text-violet-600 dark:text-violet-400'
-                : 'border-transparent text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300'
+                ? 'border-[#3182F6] text-[#3182F6]'
+                : 'border-transparent text-[#6B7684] hover:text-[#191F28]'
             }`}
           >
             기본 정보
@@ -137,8 +137,8 @@ export function EditProfileModal({
             onClick={() => setActiveTab('links')}
             className={`py-3 text-xs sm:text-sm font-semibold border-b-2 transition-colors ${
               activeTab === 'links'
-                ? 'border-violet-600 text-violet-600 dark:text-violet-400'
-                : 'border-transparent text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300'
+                ? 'border-[#3182F6] text-[#3182F6]'
+                : 'border-transparent text-[#6B7684] hover:text-[#191F28]'
             }`}
           >
             링크 관리 ({formData.links.length})
@@ -147,8 +147,8 @@ export function EditProfileModal({
             onClick={() => setActiveTab('theme')}
             className={`py-3 text-xs sm:text-sm font-semibold border-b-2 transition-colors ${
               activeTab === 'theme'
-                ? 'border-violet-600 text-violet-600 dark:text-violet-400'
-                : 'border-transparent text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300'
+                ? 'border-[#3182F6] text-[#3182F6]'
+                : 'border-transparent text-[#6B7684] hover:text-[#191F28]'
             }`}
           >
             테마 & 색상
@@ -454,11 +454,11 @@ export function EditProfileModal({
         </div>
 
         {/* Modal Footer Controls */}
-        <div className="flex items-center justify-between px-6 py-4 border-t border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/60">
+        <div className="flex items-center justify-between px-6 py-4 border-t border-[#E5E8EB] bg-[#F9FAFB]">
           <button
             type="button"
             onClick={onReset}
-            className="text-xs text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300 underline"
+            className="text-xs text-[#8B95A1] hover:text-[#191F28] underline"
           >
             기본값 복원
           </button>
@@ -467,14 +467,14 @@ export function EditProfileModal({
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 rounded-xl text-xs font-semibold text-zinc-600 dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-800 transition"
+              className="px-4 py-2.5 rounded-[12px] text-xs font-semibold bg-[#F2F4F6] hover:bg-[#E5E8EB] text-[#191F28] transition"
             >
               취소
             </button>
             <button
               type="button"
               onClick={handleSave}
-              className="px-5 py-2 rounded-xl text-xs font-semibold bg-violet-600 hover:bg-violet-700 text-white shadow-md shadow-violet-500/20 transition active:scale-95"
+              className="px-5 py-2.5 rounded-[12px] text-xs font-bold bg-[#3182F6] hover:bg-[#1B64DA] text-white shadow-md shadow-blue-500/20 transition active:scale-95"
             >
               변경사항 저장
             </button>

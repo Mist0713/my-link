@@ -1,94 +1,136 @@
 @import "tailwindcss";
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Toss Design System (TDS) Foundation Tokens */
+  --background: #F2F4F6; /* TDS greyBackground (lightThemeGrey100) */
+  --foreground: #191F28; /* TDS grey900 (primary text, never pure black) */
+  
+  --tds-blue-500: #3182F6; /* Canonical Toss Blue */
+  --tds-blue-600: #1B64DA; /* Pressed Toss Blue */
+  --tds-blue-50: #E8F3FF;  /* Brand-weak background */
+  
+  --tds-grey-900: #191F28; /* Primary text */
+  --tds-grey-800: #333D4B;
+  --tds-grey-700: #4E5968; /* Secondary text */
+  --tds-grey-600: #6B7684; /* Tertiary text */
+  --tds-grey-500: #8B95A1; /* Placeholder */
+  --tds-grey-400: #B0B8C1; /* Disabled text */
+  --tds-grey-300: #D1D6DB;
+  --tds-grey-200: #E5E8EB; /* Default hairline border */
+  --tds-grey-100: #F2F4F6; /* Secondary surface */
+  --tds-grey-50: #F9FAFB;
+  --tds-white: #FFFFFF;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Apple SD Gothic Neo", "Noto Sans KR", Roboto, sans-serif;
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Apple SD Gothic Neo", "Noto Sans KR", Roboto, "Helvetica Neue", Arial, sans-serif;
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* ========================================================
- * [Neobrutalism 스타일 가이드 & 반응형 유틸리티]
- * - 굵은 검은 테두리: 3px solid black
- * - 하드 그림자: 6px 6px 0 black (블러 없음)
- * - 배경색: 밝은 노란색 (#FEF08A)
- * - 둥근 모서리: 12px
+ * Toss Design System (TDS) UI Utilities
  * ======================================================== */
 
-.neobrutal-profile-card {
-  box-sizing: border-box;
-  background-color: #FEF08A;
-  border: 3px solid black;
-  box-shadow: 6px 6px 0 black;
-  border-radius: 12px;
-  text-align: center;
-  margin-left: auto;
-  margin-right: auto;
-  display: flex;
-  flex-direction: column;
+/* TDS White Surface Card */
+.tds-card {
+  background-color: #FFFFFF;
+  border-radius: 24px;
+  border: 1px solid #E5E8EB;
+  box-shadow: 0 1px 3px rgba(25, 31, 40, 0.04);
+}
+
+/* TDS Button Primary (화면당 단 하나의 가장 중요한 액션) */
+.tds-btn-primary {
+  background-color: #3182F6;
+  color: #FFFFFF;
+  font-weight: 700;
+  border-radius: 16px;
+  height: 52px;
+  display: inline-flex;
   align-items: center;
-  /* 기본 모바일 (360px ~ 767px): 카드 너비 100%, 패딩 16px */
-  width: 100%;
-  padding: 16px;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.15s ease;
+  box-shadow: 0 2px 8px rgba(49, 130, 246, 0.25);
+}
+.tds-btn-primary:hover {
+  background-color: #1B64DA;
+}
+.tds-btn-primary:active {
+  transform: scale(0.98);
 }
 
-/* 태블릿 (768px ~ 1023px): 카드 너비 80%, 최대 480px, 패딩 24px */
-@media (min-width: 768px) and (max-width: 1023px) {
-  .neobrutal-profile-card {
-    width: 80%;
-    max-width: 480px;
-    padding: 24px;
-  }
+/* TDS Button Secondary (보조 액션) */
+.tds-btn-secondary {
+  background-color: #F2F4F6;
+  color: #191F28;
+  font-weight: 600;
+  border-radius: 14px;
+  height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+}
+.tds-btn-secondary:hover {
+  background-color: #E5E8EB;
+}
+.tds-btn-secondary:active {
+  transform: scale(0.98);
 }
 
-/* 데스크탑 (1024px ~): 카드 너비 400px 고정, 패딩 24px */
-@media (min-width: 1024px) {
-  .neobrutal-profile-card {
-    width: 400px;
-    max-width: 400px;
-    padding: 24px;
-  }
+/* TDS Chip (34px full pill) */
+.tds-chip {
+  height: 34px;
+  border-radius: 999px;
+  border: 1px solid #E5E8EB;
+  background-color: #FFFFFF;
+  color: #4E5968;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 0 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: background-color 0.15s ease;
+}
+.tds-chip:hover {
+  background-color: #F2F4F6;
 }
 
-/* [프로필 이미지]
- * - 형태: 원형 (border-radius: 50%)
- * - 크기: 120px x 120px
- * - 테두리: 3px solid black
- * - 하드 그림자: 4px 4px 0 black
- */
-.neobrutal-profile-img-container {
-  box-sizing: border-box;
-  width: 120px;
-  height: 120px;
-  min-width: 120px;
-  min-height: 120px;
-  max-width: 120px;
-  max-height: 120px;
-  border-radius: 50%;
-  border: 3px solid black;
-  box-shadow: 4px 4px 0 black;
-  overflow: hidden;
-  position: relative;
-  background-color: #ffffff;
-  margin-left: auto;
-  margin-right: auto;
+/* TDS Brand Chip */
+.tds-chip-brand {
+  height: 34px;
+  border-radius: 999px;
+  background-color: #E8F3FF;
+  color: #3182F6;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 0 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
 }
 
+/* TDS Hairline Border */
+.tds-hairline {
+  border-color: #E5E8EB;
+}
+
+/* TDS Tabular Numbers */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}

@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { ProjectItem, ProfileTheme } from '../../types/profile';
-import { themeConfigs } from '../../utils/theme';
 import { ExternalLinkIcon, GithubIcon, StarIcon } from '../icons/Icons';
 
 interface ProjectsTabProps {
@@ -10,26 +9,30 @@ interface ProjectsTabProps {
   theme: ProfileTheme;
 }
 
-export function ProjectsTab({ projects, theme }: ProjectsTabProps) {
-  const currentTheme = themeConfigs[theme] || themeConfigs.violet;
-
+/**
+ * Toss Design System (TDS) 프로젝트 카드 탭
+ * - 20px 라운드 화이트 표면 (radius-2xl) + 1px 헤어라인 보더
+ * - 단일 강조색 토스 블루 액션 버튼
+ * - 깔끔한 태그 칩 및 대표 프로젝트 뱃지
+ */
+export function ProjectsTab({ projects }: ProjectsTabProps) {
   if (projects.length === 0) {
     return (
-      <div className="py-12 text-center text-zinc-400">
-        <p className="text-sm">등록된 프로젝트가 없습니다.</p>
+      <div className="py-12 text-center text-[#8B95A1] bg-white rounded-[20px] border border-[#E5E8EB] p-8">
+        <p className="text-sm font-semibold text-[#4E5968]">등록된 프로젝트가 아직 없어요</p>
       </div>
     );
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-3.5">
       {projects.map((project) => (
         <div
           key={project.id}
-          className={`p-5 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 shadow-sm transition-all duration-200 ${currentTheme.cardHover} hover:shadow-md relative`}
+          className="p-5 rounded-[20px] bg-white border border-[#E5E8EB] hover:border-[#3182F6]/40 shadow-[0_1px_3px_rgba(25,31,40,0.04)] hover:shadow-[0_4px_16px_rgba(49,130,246,0.06)] transition-all duration-150 relative"
         >
           {project.highlight && (
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-semibold bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 border border-amber-200 dark:border-amber-800/60 mb-2.5">
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-[#E8F3FF] text-[#3182F6] mb-2.5">
               <StarIcon size={12} />
               <span>대표 프로젝트</span>
             </div>
@@ -37,11 +40,11 @@ export function ProjectsTab({ projects, theme }: ProjectsTabProps) {
 
           <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2 mb-2">
             <div>
-              <h3 className="text-lg font-bold text-zinc-900 dark:text-white">
+              <h3 className="text-base sm:text-lg font-bold text-[#191F28]">
                 {project.title}
               </h3>
               {project.role && (
-                <p className="text-xs font-medium text-zinc-500 dark:text-zinc-400 mt-0.5">
+                <p className="text-xs font-medium text-[#6B7684] mt-0.5">
                   {project.role} {project.period && `• ${project.period}`}
                 </p>
               )}
@@ -53,7 +56,7 @@ export function ProjectsTab({ projects, theme }: ProjectsTabProps) {
                   href={project.githubUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-2 rounded-xl bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 transition"
+                  className="w-9 h-9 rounded-[12px] bg-[#F2F4F6] hover:bg-[#E5E8EB] text-[#4E5968] hover:text-[#191F28] flex items-center justify-center transition active:scale-95"
                   title="GitHub 저장소 보기"
                 >
                   <GithubIcon size={16} />
@@ -64,16 +67,16 @@ export function ProjectsTab({ projects, theme }: ProjectsTabProps) {
                   href={project.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-violet-600 hover:bg-violet-700 text-white text-xs font-semibold transition shadow-xs"
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-[12px] bg-[#3182F6] hover:bg-[#1B64DA] text-white text-xs font-bold transition shadow-xs active:scale-95"
                 >
-                  <span>서비스 방문</span>
+                  <span>방문하기</span>
                   <ExternalLinkIcon size={13} />
                 </a>
               )}
             </div>
           </div>
 
-          <p className="text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed mb-4">
+          <p className="text-sm text-[#4E5968] leading-relaxed mb-3.5 whitespace-pre-line">
             {project.description}
           </p>
 
@@ -81,7 +84,7 @@ export function ProjectsTab({ projects, theme }: ProjectsTabProps) {
             {project.tags.map((tag) => (
               <span
                 key={tag}
-                className="px-2.5 py-0.5 rounded-md text-xs font-medium bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 font-mono"
+                className="px-2.5 py-1 rounded-[8px] text-xs font-medium bg-[#F2F4F6] text-[#4E5968] font-mono"
               >
                 #{tag}
               </span>

@@ -45,7 +45,7 @@ export interface GuestbookMessage {
   avatarColor: string;
 }
 
-export type ProfileTheme = 'modern' | 'sunset' | 'emerald' | 'violet' | 'dark' | 'clean';
+export type ProfileTheme = 'toss' | 'modern' | 'sunset' | 'emerald' | 'violet' | 'dark' | 'clean';
 
 export interface ProfileData {
   name: string;
