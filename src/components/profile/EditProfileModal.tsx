@@ -3,7 +3,8 @@
 import React, { useState } from 'react';
 import { LinkItem, ProfileData, ProfileTheme } from '../../types/profile';
 import { themeConfigs } from '../../utils/theme';
-import { CloseIcon, PlusIcon, TrashIcon, CheckIcon } from '../icons/Icons';
+import { CloseIcon, TrashIcon, CheckIcon } from '../icons/Icons';
+import { AddLinkDialog } from './AddLinkDialog';
 
 interface EditProfileModalProps {
   isOpen: boolean;
@@ -23,12 +24,6 @@ export function EditProfileModal({
   const [formData, setFormData] = useState<ProfileData>(profile);
   const [activeTab, setActiveTab] = useState<'basic' | 'links' | 'theme'>('basic');
 
-  // New Link Inputs
-  const [newTitle, setNewTitle] = useState('');
-  const [newUrl, setNewUrl] = useState('');
-  const [newDesc, setNewDesc] = useState('');
-  const [newBadge, setNewBadge] = useState('');
-
   if (!isOpen) return null;
 
   const handleInputChange = <K extends keyof ProfileData>(field: K, value: ProfileData[K]) => {
@@ -38,34 +33,11 @@ export function EditProfileModal({
     }));
   };
 
-  const handleAddLink = () => {
-    if (!newTitle.trim() || !newUrl.trim()) return;
-
-    let formattedUrl = newUrl.trim();
-    if (!/^https?:\/\//i.test(formattedUrl) && !formattedUrl.startsWith('mailto:')) {
-      formattedUrl = 'https://' + formattedUrl;
-    }
-
-    const newLink: LinkItem = {
-      id: Date.now().toString(),
-      title: newTitle.trim(),
-      url: formattedUrl,
-      description: newDesc.trim() || undefined,
-      badge: newBadge.trim() || undefined,
-      category: 'project',
-      clicks: 0,
-      pinned: false,
-    };
-
+  const handleAddLink = (newLink: LinkItem) => {
     setFormData((prev) => ({
       ...prev,
       links: [newLink, ...prev.links],
     }));
-
-    setNewTitle('');
-    setNewUrl('');
-    setNewDesc('');
-    setNewBadge('');
   };
 
   const handleDeleteLink = (id: string) => {
@@ -314,51 +286,12 @@ export function EditProfileModal({
 
           {activeTab === 'links' && (
             <div className="space-y-5">
-              {/* Add New Link Card */}
-              <div className="p-4 rounded-2xl bg-zinc-50 dark:bg-zinc-800/50 border border-zinc-200 dark:border-zinc-700 space-y-3">
-                <h4 className="text-xs font-bold text-zinc-700 dark:text-zinc-300">
-                  + 새 링크 추가하기
-                </h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                  <input
-                    type="text"
-                    placeholder="링크 제목 (예: 블로그, 포트폴리오)"
-                    value={newTitle}
-                    onChange={(e) => setNewTitle(e.target.value)}
-                    className="px-3 py-2 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-xs text-zinc-900 dark:text-white"
-                  />
-                  <input
-                    type="text"
-                    placeholder="URL (예: https://...)"
-                    value={newUrl}
-                    onChange={(e) => setNewUrl(e.target.value)}
-                    className="px-3 py-2 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-xs text-zinc-900 dark:text-white"
-                  />
+              <div className="flex flex-wrap items-center justify-between gap-3 rounded-[16px] border border-[#E5E8EB] bg-[#F9FAFB] p-4">
+                <div className="min-w-[180px] flex-1">
+                  <h4 className="text-sm font-bold text-[#191F28]">링크 목록</h4>
+                  <p className="mt-1 text-xs text-[#6B7684]">제목과 주소를 입력해 새 링크를 추가해요.</p>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                  <input
-                    type="text"
-                    placeholder="간단한 설명 (선택)"
-                    value={newDesc}
-                    onChange={(e) => setNewDesc(e.target.value)}
-                    className="px-3 py-2 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-xs text-zinc-900 dark:text-white"
-                  />
-                  <input
-                    type="text"
-                    placeholder="배지 텍스트 (예: NEW, HOT, 추천)"
-                    value={newBadge}
-                    onChange={(e) => setNewBadge(e.target.value)}
-                    className="px-3 py-2 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-xs text-zinc-900 dark:text-white"
-                  />
-                </div>
-                <button
-                  type="button"
-                  onClick={handleAddLink}
-                  className="w-full py-2 px-3 rounded-xl bg-violet-600 hover:bg-violet-700 text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition"
-                >
-                  <PlusIcon size={14} />
-                  <span>목록에 추가</span>
-                </button>
+                <AddLinkDialog existingLinks={formData.links} onAdd={handleAddLink} />
               </div>
 
               {/* Current Links List */}
